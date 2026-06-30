@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>July 2026 "National Day" Calendar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board:#d9b888;
+    --board-dark:#c7a374;
+    --sky:#bfe3f0;
+    --coral:#ff6b4a;
+    --coral-dark:#c8431f;
+    --sun:#ffc93d;
+    --sun-dark:#a8780a;
+    --leaf:#5fa86a;
+    --ink:#3a2e21;
+    --cream:#fffdf7;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:40px 20px 60px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(0,0,0,0.06) 0, transparent 50%),
+      var(--board);
+    font-family:'DM Sans', sans-serif;
+    color:var(--ink);
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+  }
+  header{
+    text-align:center;
+    margin-bottom:34px;
+  }
+  .eyebrow{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--coral-dark);
+    background:var(--cream);
+    display:inline-block;
+    padding:6px 16px;
+    border-radius:999px;
+    box-shadow:0 2px 0 rgba(0,0,0,0.08);
+    transform:rotate(-1.5deg);
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    font-size:clamp(34px,5vw,56px);
+    margin:0 0 10px;
+    color:var(--ink);
+    text-shadow:2px 2px 0 rgba(255,255,255,0.45);
+  }
+  h1 span{ color:var(--coral-dark); }
+  .sub{
+    font-family:'Caveat', cursive;
+    font-size:24px;
+    font-weight:700;
+    color:#5a4a35;
+    max-width:620px;
+    margin:0 auto;
+    line-height:1.35;
+  }
+  .weekdays{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:14px;
+    margin:30px 0 12px;
+  }
+  .weekdays div{
+    text-align:center;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#5a4a35;
+    background:rgba(255,255,255,0.35);
+    border-radius:8px;
+    padding:6px 0;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:14px;
+  }
+  .blank{ visibility:hidden; }
+  .day{
+    position:relative;
+    transform:rotate(var(--r,0deg));
+    transition:transform .15s ease;
+  }
+  .day:hover{ transform:rotate(0deg) scale(1.04); z-index:5; }
+  .tape{
+    position:absolute;
+    top:-10px;
+    left:50%;
+    transform:translateX(-50%) rotate(-3deg);
+    width:54px;
+    height:18px;
+    background:rgba(255,201,61,0.85);
+    border:1px solid rgba(168,120,10,0.35);
+    box-shadow:0 1px 2px rgba(0,0,0,0.15);
+    z-index:2;
+  }
+  .polaroid{
+    background:var(--cream);
+    border:1px solid rgba(0,0,0,0.06);
+    border-radius:3px;
+    padding:8px 8px 12px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.4) inset;
+    position:relative;
+  }
+  .photo-area{
+    background:linear-gradient(160deg,var(--sky),#e8f5fb);
+    border-radius:2px;
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .photo-area::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 70% 20%, rgba(255,255,255,0.5), transparent 55%);
+  }
+  .emoji{ font-size:60px; position:relative; z-index:1; filter:drop-shadow(1px 2px 1px rgba(0,0,0,0.15)); }
+  .date-badge{
+    position:absolute;
+    top:6px;
+    right:6px;
+    background:var(--coral);
+    color:#fff;
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 1px 2px rgba(0,0,0,0.25);
+    z-index:2;
+  }
+  .caption{
+    padding-top:8px;
+    text-align:center;
+  }
+  .caption strong{
+    display:block;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:11.5px;
+    line-height:1.25;
+    color:var(--ink);
+    min-height:28px;
+  }
+  .caption span{
+    display:block;
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:16px;
+    color:var(--coral-dark);
+    margin-top:2px;
+  }
+  .bonus{
+    margin-top:54px;
+  }
+  .bonus h2{
+    font-family:'Fredoka', sans-serif;
+    font-size:24px;
+    text-align:center;
+    color:var(--ink);
+    margin-bottom:4px;
+  }
+  .bonus p.lead{
+    text-align:center;
+    font-family:'Caveat', cursive;
+    font-size:19px;
+    color:#5a4a35;
+    margin-top:0;
+    margin-bottom:26px;
+  }
+  .bonus-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:16px;
+    max-width:960px;
+    margin:0 auto;
+  }
+  .bonus-card{
+    background:var(--cream);
+    border-radius:10px;
+    padding:16px 12px;
+    text-align:center;
+    box-shadow:0 3px 6px rgba(0,0,0,0.15);
+    border:1px solid rgba(0,0,0,0.05);
+    transform:rotate(var(--r,0deg));
+  }
+  .bonus-card .emoji{ font-size:48px; display:block; margin-bottom:8px; }
+  .bonus-card strong{
+    display:block;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:4px;
+  }
+  .bonus-card span{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:16px;
+    color:var(--coral-dark);
+  }
+  footer{
+    text-align:center;
+    margin-top:50px;
+    font-family:'Caveat', cursive;
+    font-size:18px;
+    color:#5a4a35;
+  }
+  @media print{
+    body{ background:#fff; padding:10px; }
+    .day:hover{ transform:rotate(var(--r,0deg)); }
+  }
+  @media (max-width:700px){
+    .weekdays div{ font-size:9px; letter-spacing:1px; }
+    .caption strong{ font-size:9.5px; min-height:24px; }
+    .caption span{ font-size:13px; }
+    .emoji{ font-size:40px; }
+    .grid{ gap:8px; }
+    .weekdays{ gap:8px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Snap a day. Fill the month.</div>
+    <h1>July 2026 <span>Photo</span> Scavenger Hunt</h1>
+    <p class="sub">Every day in July is a real "National Day". Your job is to take one photo of something that matches it. Share with the group and see how many you can collect by July 31!</p>
+  </header>
+
+  <div class="weekdays">
+    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+  </div>
+
+  <div class="grid">
+    <div class="blank"></div><div class="blank"></div><div class="blank"></div>
+
+    <div class="day" style="--r:-1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">1</div>
+        <div class="photo-area"><span class="emoji">📬</span></div>
+        <div class="caption"><strong>National Postal Worker Day</strong><span>Snap a mailbox</span></div>
+      </div></div>
+
+    <div class="day" style="--r:2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">2</div>
+        <div class="photo-area"><span class="emoji">📝</span></div>
+        <div class="caption"><strong>National "I Forgot" Day</strong><span>Snap a reminder note</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">3</div>
+        <div class="photo-area"><span class="emoji">🍫</span></div>
+        <div class="caption"><strong>National Chocolate Wafer Day</strong><span>Snap a chocolate wafer/cookie</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">4</div>
+        <div class="photo-area"><span class="emoji">🎆</span></div>
+        <div class="caption"><strong>Independence Day</strong><span>Snap an American flag</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">5</div>
+        <div class="photo-area"><span class="emoji">🍪</span></div>
+        <div class="caption"><strong>National Graham Cracker Day</strong><span>Snap graham crackers</span></div>
+      </div></div>
+
+    <div class="day" style="--r:2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">6</div>
+        <div class="photo-area"><span class="emoji">🍗</span></div>
+        <div class="caption"><strong>National Fried Chicken Day</strong><span>Snap fried chicken</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">7</div>
+        <div class="photo-area"><span class="emoji">🍝</span></div>
+        <div class="caption"><strong>National Macaroni Day</strong><span>Snap a bowl of macaroni/pasta</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">8</div>
+        <div class="photo-area"><span class="emoji">🧊</span></div>
+        <div class="caption"><strong>National Freezer Pop Day</strong><span>Snap a popsicle</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">9</div>
+        <div class="photo-area"><span class="emoji">🍪</span></div>
+        <div class="caption"><strong>National Sugar Cookie Day</strong><span>Snap a sugar cookie</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">10</div>
+        <div class="photo-area"><span class="emoji">🐱</span></div>
+        <div class="caption"><strong>National Kitten Day</strong><span>Snap a cat</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">11</div>
+        <div class="photo-area"><span class="emoji">🐾</span></div>
+        <div class="caption"><strong>All American Pet Photo Day</strong><span>Snap your pet</span></div>
+      </div></div>
+
+    <div class="day" style="--r:2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">12</div>
+        <div class="photo-area"><span class="emoji">🥧</span></div>
+        <div class="caption"><strong>National Pecan Pie Day</strong><span>Snap a slice of pecan pie</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">13</div>
+        <div class="photo-area"><span class="emoji">🎸</span></div>
+        <div class="caption"><strong>World Rock Day</strong><span>Snap an instrument or album</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">14</div>
+        <div class="photo-area"><span class="emoji">🇫🇷</span></div>
+        <div class="caption"><strong>Bastille Day</strong><span>Snap something French</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">15</div>
+        <div class="photo-area"><span class="emoji">🌭</span></div>
+        <div class="caption"><strong>National Hot Dog Day</strong><span>Snap a hot dog</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">16</div>
+        <div class="photo-area"><span class="emoji">🍒</span></div>
+        <div class="caption"><strong>National Cherry Day</strong><span>Snap some cherries</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">17</div>
+        <div class="photo-area"><span class="emoji">😀</span></div>
+        <div class="caption"><strong>World Emoji Day</strong><span>Share your favorite emoji</span></div>
+      </div></div>
+
+    <div class="day" style="--r:2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">18</div>
+        <div class="photo-area"><span class="emoji">🍍</span></div>
+        <div class="caption"><strong>National Tropical Fruit Day</strong><span>Snap a tropical fruit</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">19</div>
+        <div class="photo-area"><span class="emoji">🍨</span></div>
+        <div class="caption"><strong>National Ice Cream Day</strong><span>Snap an ice cream</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">20</div>
+        <div class="photo-area"><span class="emoji">🌕</span></div>
+        <div class="caption"><strong>National Moon Day</strong><span>Snap the moon</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">21</div>
+        <div class="photo-area"><span class="emoji">🍟</span></div>
+        <div class="caption"><strong>National Junk Food Day</strong><span>Snap your favorite junk food</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">22</div>
+        <div class="photo-area"><span class="emoji">🥭</span></div>
+        <div class="caption"><strong>National Mango Day</strong><span>Snap a mango</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">23</div>
+        <div class="photo-area"><span class="emoji">👵</span></div>
+        <div class="caption"><strong>Gorgeous Grandma Day</strong><span>Snap a grandma (or call her!)</span></div>
+      </div></div>
+
+    <div class="day" style="--r:2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">24</div>
+        <div class="photo-area"><span class="emoji">✈️</span></div>
+        <div class="caption"><strong>National Amelia Earhart Day</strong><span>Snap anything that flies</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">25</div>
+        <div class="photo-area"><span class="emoji">🤠</span></div>
+        <div class="caption"><strong>National Day of the Cowboy</strong><span>Snap boots or a cowboy hat</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">26</div>
+        <div class="photo-area"><span class="emoji">♿</span></div>
+        <div class="caption"><strong>National Disability Independence Day</strong><span>Snap an accessible feature or aid</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">27</div>
+        <div class="photo-area"><span class="emoji">🍮</span></div>
+        <div class="caption"><strong>National Crème Brûlée Day</strong><span>Snap a caramelized dessert</span></div>
+      </div></div>
+
+    <div class="day" style="--r:1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">28</div>
+        <div class="photo-area"><span class="emoji">🍫</span></div>
+        <div class="caption"><strong>National Milk Chocolate Day</strong><span>Snap a piece of chocolate</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">29</div>
+        <div class="photo-area"><span class="emoji">🍗</span></div>
+        <div class="caption"><strong>National Chicken Wing Day</strong><span>Snap chicken wings</span></div>
+      </div></div>
+
+    <div class="day" style="--r:2deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">30</div>
+        <div class="photo-area"><span class="emoji">🤝</span></div>
+        <div class="caption"><strong>International Day of Friendship</strong><span>Snap a friend</span></div>
+      </div></div>
+
+    <div class="day" style="--r:-1.5deg"><div class="tape"></div>
+      <div class="polaroid"><div class="date-badge">31</div>
+        <div class="photo-area"><span class="emoji">🥑</span></div>
+        <div class="caption"><strong>National Avocado Day</strong><span>Snap an avocado</span></div>
+      </div></div>
+
+    <div class="blank"></div>
+  </div>
+
+  <div class="bonus">
+    <h2>Bonus: anytime-this-month challenges</h2>
+    <p class="lead">July is also stacked with month-long themes. Post these whenever for some bonus points!</p>
+    <div class="bonus-grid">
+      <div class="bonus-card" style="--r:1.5deg"><span class="emoji">🔥</span><strong>Nat'l Grilling Month</strong><span>A grill</span></div>
+      <div class="bonus-card" style="--r:-2deg"><span class="emoji">🧺</span><strong>Nat'l Picnic Month</strong><span>A picnic basket</span></div>
+      <div class="bonus-card" style="--r:1deg"><span class="emoji">♿</span><strong>Disability Pride Month</strong><span>An accessibility symbol</span></div>
+      <div class="bonus-card" style="--r:-1.5deg"><span class="emoji">🍉</span><strong>Nat'l Watermelon Month</strong><span>A watermelon</span></div>
+      <div class="bonus-card" style="--r:2deg"><span class="emoji">♻️</span><strong>Plastic Free July</strong><span>A reusable bag or bottle</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
