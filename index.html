@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>July 2026 "National Day" Calendar</title>
+<title>July 2026 Photo Scavenger Hunt Calendar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,12 +21,9 @@
     --cream:#fffdf7;
   }
   *{box-sizing:border-box;}
-  html{ -webkit-text-size-adjust:100%; overflow-x:hidden; width:100%; }
   body{
     margin:0;
     padding:40px 20px 60px;
-    width:100%;
-    overflow-x:hidden;
     background:
       radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0, transparent 45%),
       radial-gradient(circle at 80% 70%, rgba(0,0,0,0.06) 0, transparent 50%),
@@ -101,14 +98,10 @@
   .blank{ visibility:hidden; }
   .day{
     position:relative;
-    display:flex;
     transform:rotate(var(--r,0deg));
     transition:transform .15s ease;
   }
-  @media (hover:hover) and (pointer:fine){
-    .day:hover{ transform:rotate(0deg) scale(1.04); z-index:5; }
-  }
-  .day:active{ transform:rotate(0deg) scale(1.04); z-index:5; }
+  .day:hover{ transform:rotate(0deg) scale(1.04); z-index:5; }
   .tape{
     position:absolute;
     top:-10px;
@@ -128,15 +121,11 @@
     padding:8px 8px 12px;
     box-shadow:0 4px 8px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.4) inset;
     position:relative;
-    width:100%;
-    display:flex;
-    flex-direction:column;
   }
   .photo-area{
     background:linear-gradient(160deg,var(--sky),#e8f5fb);
     border-radius:2px;
     aspect-ratio:1/1;
-    flex-shrink:0;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -149,7 +138,7 @@
     inset:0;
     background:radial-gradient(circle at 70% 20%, rgba(255,255,255,0.5), transparent 55%);
   }
-  .emoji{ font-size:60px; position:relative; z-index:1; filter:drop-shadow(1px 2px 1px rgba(0,0,0,0.15)); }
+  .emoji{ font-size:54px; position:relative; z-index:1; filter:drop-shadow(1px 2px 1px rgba(0,0,0,0.15)); }
   .date-badge{
     position:absolute;
     top:6px;
@@ -171,10 +160,6 @@
   .caption{
     padding-top:8px;
     text-align:center;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
   }
   .caption strong{
     display:block;
@@ -183,7 +168,7 @@
     font-size:11.5px;
     line-height:1.25;
     color:var(--ink);
-    overflow-wrap:break-word;
+    min-height:28px;
   }
   .caption span{
     display:block;
@@ -227,7 +212,7 @@
     border:1px solid rgba(0,0,0,0.05);
     transform:rotate(var(--r,0deg));
   }
-  .bonus-card .emoji{ font-size:48px; display:block; margin-bottom:8px; }
+  .bonus-card .emoji{ font-size:42px; display:block; margin-bottom:8px; }
   .bonus-card strong{
     display:block;
     font-family:'Fredoka', sans-serif;
@@ -252,52 +237,39 @@
     body{ background:#fff; padding:10px; }
     .day:hover{ transform:rotate(var(--r,0deg)); }
   }
-  @media (max-width:700px){
-    body{ padding:28px 12px 44px; }
-    header{ margin-bottom:24px; }
-    .sub{ font-size:19px; padding:0 8px; }
-    .weekdays div{ font-size:9px; letter-spacing:1px; padding:5px 0; }
-    .day{ transform:none !important; }
-    .day:active{ transform:none; }
-    .caption{ padding-top:6px; }
-    .caption strong{ font-size:9.5px; }
-    .caption span{ font-size:13px; margin-top:1px; }
-    .emoji{ font-size:34px; }
-    .grid{ gap:6px; row-gap:10px; }
-    .weekdays{ gap:6px; margin:22px 0 10px; }
-    .polaroid{ padding:5px 5px 8px; }
-    .tape{ width:36px; height:13px; top:-5px; }
-    .date-badge{ width:20px; height:20px; font-size:11px; top:4px; right:4px; }
-    .bonus{ margin-top:38px; }
-    .bonus-grid{ gap:12px; }
-    .bonus-card{ transform:none; }
+
+  /* Tablet: 7 columns no longer fit comfortably, drop to 4.
+     Weekday alignment only makes sense at the full 7-column width,
+     so we hide that row and the empty lead-in/trail-off cells once
+     we restack, same way the w3schools example hides labels that
+     no longer apply at a given breakpoint. */
+  @media (max-width:980px){
+    body{ padding:30px 16px 50px; }
+    .grid{ grid-template-columns:repeat(4,1fr); gap:16px; }
+    .weekdays{ display:none; }
+    .blank{ display:none; }
+    .day:hover{ transform:rotate(var(--r,0deg)); }
   }
-  @media (max-width:480px){
-    body{ padding:20px 8px 36px; }
-    .eyebrow{ font-size:11px; padding:5px 12px; letter-spacing:2px; }
-    h1{ font-size:clamp(26px,8vw,34px); }
-    .sub{ font-size:17px; padding:0 4px; }
-    .weekdays div{ font-size:7.5px; letter-spacing:0.5px; }
-    .caption strong{ font-size:8.3px; line-height:1.15; }
-    .caption span{ font-size:11.5px; }
-    .emoji{ font-size:26px; }
-    .grid{ gap:4px; row-gap:9px; }
-    .weekdays{ gap:4px; }
-    .polaroid{ padding:4px 4px 6px; border-radius:2px; }
-    .tape{ display:none; }
-    .date-badge{ width:17px; height:17px; font-size:9.5px; top:3px; right:3px; }
-    .bonus h2{ font-size:20px; }
-    .bonus p.lead{ font-size:16px; padding:0 8px; }
-    .bonus-grid{ grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; }
-    .bonus-card{ padding:12px 8px; transform:none; }
-    .bonus-card .emoji{ font-size:36px; }
+
+  /* Phone: 2 columns, comfortably tappable, no hover-only states. */
+  @media (max-width:640px){
+    .grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+    .bonus-grid{ grid-template-columns:repeat(2,1fr); }
+    h1{ font-size:clamp(28px,8vw,40px); }
+    .sub{ font-size:19px; }
+    .caption strong{ font-size:11px; min-height:26px; }
+    .caption span{ font-size:14px; }
+    .date-badge{ width:22px; height:22px; font-size:12px; }
   }
-  @media (max-width:360px){
-    .weekdays div{ font-size:6.5px; }
-    .caption strong{ font-size:7.6px; }
-    .caption span{ font-size:10.5px; }
-    .emoji{ font-size:22px; }
-    .date-badge{ width:15px; height:15px; font-size:8.5px; }
+
+  /* Small phone: single column, full-width cards, easiest to read
+     and tap while scrolling through the month on a small screen. */
+  @media (max-width:420px){
+    .grid{ grid-template-columns:1fr; gap:14px; }
+    .day{ max-width:280px; margin:0 auto; }
+    .bonus-grid{ grid-template-columns:1fr; max-width:280px; margin:0 auto; }
+    .bonus-card{ max-width:280px; }
+    .eyebrow{ font-size:11px; padding:5px 12px; }
   }
 </style>
 </head>
@@ -509,7 +481,7 @@
     <h2>Bonus: anytime-this-month challenges</h2>
     <p class="lead">July is also stacked with month-long themes. Post these whenever for some bonus points!</p>
     <div class="bonus-grid">
-      <div class="bonus-card" style="--r:1.5deg"><span class="emoji">🔥</span><strong>Nat'l Grilling Month</strong><span>A grill</span></div>
+      <div class="bonus-card" style="--r:1.5deg"><span class="emoji">🔥</span><strong>Nat'l Grilling Month</strong><span>A grill in action</span></div>
       <div class="bonus-card" style="--r:-2deg"><span class="emoji">🧺</span><strong>Nat'l Picnic Month</strong><span>A picnic basket</span></div>
       <div class="bonus-card" style="--r:1deg"><span class="emoji">♿</span><strong>Disability Pride Month</strong><span>An accessibility symbol</span></div>
       <div class="bonus-card" style="--r:-1.5deg"><span class="emoji">🍉</span><strong>Nat'l Watermelon Month</strong><span>A watermelon</span></div>
