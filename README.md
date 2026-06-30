@@ -2,4 +2,4 @@
 
 Here is a preview of the July calendar:
 
-![July Calendar Preview](index.png)
+![July Calendar Preview](index.png?v=2)
